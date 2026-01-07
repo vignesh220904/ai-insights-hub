@@ -7,13 +7,19 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    { label: "Experience", href: "#experience" },
-    { label: "Projects", href: "#projects" },
-    { label: "Education", href: "#education" },
-    { label: "Contact", href: "#contact" },
+    { label: "About", id: "about" },
+    { label: "Skills", id: "skills" },
+    { label: "Experience", id: "experience" },
+    { label: "Projects", id: "projects" },
+    { label: "Education", id: "education" },
+    { label: "Contact", id: "contact" },
   ];
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +50,11 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <a
                 key={link.label}
-                href={link.href}
+                href="#/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(link.id);
+                }}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.label}
@@ -74,8 +84,12 @@ const Navbar = () => {
                 {navLinks.map((link) => (
                   <a
                     key={link.label}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    href="#/"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(link.id);
+                      setIsMobileMenuOpen(false);
+                    }}
                     className="text-muted-foreground hover:text-foreground transition-colors py-2"
                   >
                     {link.label}
